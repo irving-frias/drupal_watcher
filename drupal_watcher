@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Get the list of plugins to verify
+plugins=(fswatch)
+
+# Loop through the plugins
+for plugin in "${plugins[@]}"; do
+  echo "Verifying $plugin..."
+
+  # Check if the plugin is installed
+  if brew list "$plugin" &>/dev/null; then
+    echo "$plugin is installed."
+  else
+    echo "Installing $plugin..."
+    brew install "$plugin"
+    echo "$plugin installed..."
+  fi
+done
+
+# Check if the directory argument is provided
+WATCH_DIR="$(pwd)"  # Use provided directory or default to current directory
+FOLDER_MODULES_TO_WATCH="${WATCH_DIR}/docroot/modules/custom"
+FOLDER_THEMES_TO_WATCH="${WATCH_DIR}/docroot/themes/custom"
+FOLDER_BINARIES="${WATCH_DIR}/vendor/bin"
+# Path to the Drush executable
+DRUSH="${FOLDER_BINARIES}/drush"
+
+# Action to perform when a file is modified
+ACTION="$DRUSH cr"  # Clear Drupal cache
+
+echo "Watching $FOLDER_MODULES_TO_WATCH and $FOLDER_THEMES_TO_WATCH for changes..."
+
+# Check if the specified directory exists
+if [ ! -d "$WATCH_DIR" ]; then
+    echo "Error: Directory '$WATCH_DIR' does not exist."
+    exit 1
+fi
+
+# Check if Drush executable exists
+if [ ! -x "$DRUSH" ]; then
+    echo "Error: Drush executable not found at '$DRUSH'."
+    exit 1
+fi
+
+# Use fswatch to monitor the directories for file modifications
+fswatch -0 -e ".*" -i "\\.html\\.twig$" "$FOLDER_MODULES_TO_WATCH" "$FOLDER_THEMES_TO_WATCH" | while read -d "" modified_file; do
+    echo "File $modified_file was modified"
+    $ACTION || echo "Error: Failed to run '$ACTION'."
+    # Add a delay to ignore subsequent saves for a brief period
+    echo "waiting..."
+    sleep 5
+done
