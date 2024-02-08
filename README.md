@@ -6,9 +6,9 @@ This script monitors specified directories for file changes and clears the Drupa
 
 ## Installation
 
-1. Move the `watch_and_clear_cache.sh` script to `/usr/local/bin` to make it accessible system-wide:
+1. Move the `drupal_watcher` script to `/usr/local/bin` to make it accessible system-wide:
     ```bash
-    mv watch_and_clear_cache.sh /usr/local/bin/drupal_watcher
+    mv drupal_watcher /usr/local/bin/drupal_watcher
     ```
 
 2. Navigate to your Drupal project directory:
@@ -37,10 +37,10 @@ It requires Drush to be installed in the `vendor/bin` directory.
 
 ## Customization
 
-You can customize the directories to watch and the actions to perform by editing the script variables directly in the `watch_and_clear_cache.sh` file.
+You can customize the directories to watch and the actions to perform by editing the script variables directly in the `drupal_watcher` file.
 
 ## Notes
 
-- Ensure that the script file (`watch_and_clear_cache.sh`) has executable permissions set before moving it to `/usr/local/bin`:
+- Ensure that the script file (`drupal_watcher`) has executable permissions set before moving it to `/usr/local/bin`:
   ```bash
-  chmod +x watch_and_clear_cache.sh
+  chmod +x drupal_watcher
