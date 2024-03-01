@@ -48,11 +48,29 @@ if [ ! -x "$DRUSH" ]; then
     exit 1
 fi
 
+clear_cache() {
+  $ACTION || echo -e "${RED}Error: Failed to run '$ACTION'.${NC}"
+  echo -e "${YELLOW}waiting...${NC}"
+  # Add a delay to ignore subsequent saves for a brief period
+  sleep 5
+}
+
+export -f clear_cache
+
 # Use fswatch to monitor the directories for file modifications
 fswatch -0 -e ".*" -i "\\.html\\.twig$" "$FOLDER_MODULES_TO_WATCH" "$FOLDER_THEMES_TO_WATCH" | while read -d "" modified_file; do
     echo -e "${GREEN}File $modified_file was modified${NC}"
-    $ACTION || echo -e "${RED}Error: Failed to run '$ACTION'.${NC}"
-    # Add a delay to ignore subsequent saves for a brief period
-    echo -e "${YELLOW}waiting...${NC}"
-    sleep 5
+    clear_cache
+done
+
+# Use fswatch to monitor the directories for file modifications
+fswatch -0 -e ".*" -i "\\.inc$" "$FOLDER_MODULES_TO_WATCH" "$FOLDER_THEMES_TO_WATCH" | while read -d "" modified_file; do
+    echo -e "${GREEN}File $modified_file was modified${NC}"
+    clear_cache
+done
+
+# Use fswatch to monitor the directories for file modifications
+fswatch -0 -e ".*" -i "\\.*\\.yml$" "$FOLDER_MODULES_TO_WATCH" "$FOLDER_THEMES_TO_WATCH" | while read -d "" modified_file; do
+    echo -e "${GREEN}File $modified_file was modified${NC}"
+    clear_cache
 done
