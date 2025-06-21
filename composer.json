@@ -4,6 +4,8 @@
     "type": "library",
     "license": "MIT",
     "version": "1.0.0-alpha1",
+    "minimum-stability": "alpha",
+    "prefer-stable": true,
     "require": {
         "spatie/file-system-watcher": "^1.2"
     },
