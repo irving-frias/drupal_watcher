@@ -1,0 +1,28 @@
+{
+    "name": "ifrias/drupal_watcher",
+    "description": "The Drupal Watcher script is a handy tool that monitors specified directories for file changes within a Drupal project. It automatically clears the Drupal cache using Drush whenever a file is modified, ensuring your Drupal site remains up-to-date and responsive to changes during development.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "spatie/file-system-watcher": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ifrias\\DrupalWatcher\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "irving-frias",
+            "email": "irvingfrias41@gmail.com"
+        }
+    ],
+    "bin": [
+        "bin/drupal-watcher"
+    ],
+    "scripts": {
+        "post-install-cmd": [
+            "Ifrias\\DrupalWatcher\\FileWatcher::postInstall"
+        ]
+    }
+}
