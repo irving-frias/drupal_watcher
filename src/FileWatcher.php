@@ -64,7 +64,7 @@ class FileWatcher
 
         foreach (self::POSSIBLE_WEB_ROOTS as $webRoot) {
             $basePath = "$projectRoot/$webRoot";
-            
+
             if (!is_dir($basePath)) {
                 continue;
             }

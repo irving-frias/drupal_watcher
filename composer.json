@@ -11,7 +11,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Ifrias\\DrupalWatcher\\": "src/"
+            "Ifrias\\DrupalFileWatcher\\": "src/"
         }
     },
     "authors": [
@@ -25,7 +25,7 @@
     ],
     "scripts": {
         "post-install-cmd": [
-            "Ifrias\\DrupalWatcher\\FileWatcher::postInstall"
+            "Ifrias\\DrupalFileWatcher\\FileWatcher::postInstall"
         ]
     }
 }
